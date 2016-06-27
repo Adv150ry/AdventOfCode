@@ -5,14 +5,23 @@ import org.springframework.stereotype.Component;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 
 @Component
 public class Day1 extends PuzzleImpl {
 
     public void run(Path path) throws Exception {
         int floor = Files.lines(path)
-                .mapToInt((parenthesis) -> parenthesis == '(' ? 1 : -1)
-                .reduce((currentFloor, action) -> );
+                .map(Object::toString)
+                .collect(Collectors.joining(""))
+                .chars()
+                .mapToObj(i -> (char)i)
+                .map((chr) -> chr == '(' ? 1 : -1)
+                .reduce((currentFloor, action) -> currentFloor + action)
+                .orElse(0);
+        logger.info("Floor: " + floor);
+
+
         String input = IOUtils.toString(Files.newInputStream(path), "UTF-8");
         int result = 0;
         boolean basementFound = false;
