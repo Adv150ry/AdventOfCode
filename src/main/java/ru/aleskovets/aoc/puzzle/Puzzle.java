@@ -1,8 +1,8 @@
 package ru.aleskovets.aoc.puzzle;
 
-import java.io.InputStream;
+import java.nio.file.Path;
 
 public interface Puzzle {
 
-    void run(InputStream inputStream) throws Exception;
+    void run(Path path) throws Exception;
 }

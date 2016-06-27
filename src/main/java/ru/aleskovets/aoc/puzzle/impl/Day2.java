@@ -3,8 +3,9 @@ package ru.aleskovets.aoc.puzzle.impl;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.stream.IntStream;
 
 @Component
@@ -29,39 +30,71 @@ public class Day2 extends PuzzleImpl {
             this.h = Integer.parseInt(dimensions[2]);
         }
 
-        int side1Perimeter() {
+        int side1Square() {
             return w*l;
         }
 
-        int side2Perimeter() {
+        int side2Square() {
             return w*h;
         }
 
-        int side3Perimeter() {
+        int side3Square() {
             return l*h;
         }
 
+        int side1Perimeter() {
+            return 2*w*l;
+        }
+
+        int side2Perimeter() {
+            return 2*w*h;
+        }
+
+        int side3Perimeter() {
+            return 2*l*h;
+        }
+
+        int volume() {
+            return  l * w * h;
+        }
+
         int surface() {
-           return 2*side1Perimeter() + 2*side2Perimeter() + 2*side3Perimeter();
+           return 2*side1Square() + 2*side2Square() + 2*side3Square();
+        }
+
+        int minSquare() {
+            return IntStream.of(side1Square(), side2Square(), side3Square()).min().orElse(0);
         }
 
         int minPerimeter() {
             return IntStream.of(side1Perimeter(), side2Perimeter(), side3Perimeter()).min().orElse(0);
         }
 
+        int requiredSquare() {
+            return surface() + minSquare();
+        }
+
         int requiredPerimeter() {
-            return surface() + minPerimeter();
+            return volume() + minPerimeter();
         }
     }
 
     @Override
-    public void run(InputStream inputStream) {
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
-        int result = buffer.lines()
+    public void run(Path path) throws Exception {
+        int paper = new BufferedReader(new InputStreamReader(Files.newInputStream(path)))
+                .lines()
+                .map(Box::new)
+                .map(Box::requiredSquare)
+                .reduce((sum, square)-> sum + square)
+                .orElse(0);
+        logger.info("Paper required: " + paper);
+
+        int ribbon = new BufferedReader(new InputStreamReader(Files.newInputStream(path)))
+                .lines()
                 .map(Box::new)
                 .map(Box::requiredPerimeter)
                 .reduce((sum, perimeter)-> sum + perimeter)
                 .orElse(0);
-        logger.info("Result: " + result);
+        logger.info("Ribbon required: " + ribbon);
     }
 }
