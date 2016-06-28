@@ -12,7 +12,6 @@ public class Day1 extends PuzzleImpl {
 
     public void run(Path path) throws Exception {
         int floor = Files.lines(path)
-                .map(Object::toString)
                 .collect(Collectors.joining(""))
                 .chars()
                 .mapToObj(i -> (char)i)
@@ -36,6 +35,5 @@ public class Day1 extends PuzzleImpl {
                 basementFound = true;
             }
         }
-        logger.info("Result: " + result);
     }
 }
