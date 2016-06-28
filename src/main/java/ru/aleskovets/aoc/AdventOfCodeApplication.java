@@ -35,7 +35,6 @@ public class AdventOfCodeApplication {
             connection.setRequestProperty("Cookie", cookie);
 
             Files.createDirectories(path.getParent());
-//            Files.createFile(path);
             Files.copy(connection.getInputStream(), path);
         }
         Class dayClass = Class.forName("ru.aleskovets.aoc.puzzle.impl.Day" + day);

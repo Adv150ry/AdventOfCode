@@ -43,15 +43,15 @@ public class Day2 extends PuzzleImpl {
         }
 
         int side1Perimeter() {
-            return 2*w*l;
+            return 2*(w + l);
         }
 
         int side2Perimeter() {
-            return 2*w*h;
+            return 2*(w + h);
         }
 
         int side3Perimeter() {
-            return 2*l*h;
+            return 2*(l + h);
         }
 
         int volume() {
