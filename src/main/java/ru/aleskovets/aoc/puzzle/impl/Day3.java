@@ -2,10 +2,9 @@ package ru.aleskovets.aoc.puzzle.impl;
 
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
@@ -13,13 +12,6 @@ public class Day3 extends PuzzleImpl {
 
     private int currentX = 0;
     private int currentY = 0;
-
-    private class CoordinateChange {
-
-        CoordinateChange(String direction) {
-
-        }
-    }
 
     private class Coordinate {
 
@@ -32,18 +24,18 @@ public class Day3 extends PuzzleImpl {
         }
 
 
-        Coordinate(String direction) {
+        Coordinate(char direction) {
             switch (direction) {
-                case ">":
+                case '>':
                     currentX++;
                     break;
-                case "^":
+                case '^':
                     currentY++;
                     break;
-                case "<":
+                case '<':
                     currentX--;
                     break;
-                case "v":
+                case 'v':
                     currentY--;
                     break;
             }
@@ -73,8 +65,10 @@ public class Day3 extends PuzzleImpl {
 
     @Override
     public void run(Path path) throws Exception {
-        Stream<Coordinate> input = new BufferedReader(new InputStreamReader(Files.newInputStream(path)))
-                .lines()
+        Stream<Coordinate> input = Files.lines(path)
+                .collect(Collectors.joining(""))
+                .chars()
+                .mapToObj(i -> (char)i)
                 .map(Coordinate::new);
         long count = Stream.concat(Stream.of(new Coordinate(0, 0)), input)
                 .distinct()
