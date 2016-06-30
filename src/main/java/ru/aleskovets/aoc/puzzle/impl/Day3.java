@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Component
@@ -61,6 +62,29 @@ public class Day3 extends PuzzleImpl {
             result = 31 * result + y;
             return result;
         }
+
+        @Override
+        public String toString() {
+            return "Coordinate{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
+        }
+    }
+
+    private static char invert(char direction) {
+        switch (direction) {
+            case '>':
+                return '<';
+            case '^':
+                return 'v';
+            case '<':
+                return '>';
+            case 'v':
+                return '^';
+            default:
+                return direction;
+        }
     }
 
     @Override
@@ -75,5 +99,29 @@ public class Day3 extends PuzzleImpl {
                 .count();
 
         logger.info("Count distinct houses: " + count);
+
+        currentX = 0;
+        currentY = 0;
+        String inputCommands = Files.lines(path)
+                .collect(Collectors.joining(""));
+
+        Stream<Coordinate> santa = IntStream.range(0, inputCommands.length()-1)
+                .filter(i -> i % 2 == 0)
+                .map(inputCommands::charAt)
+                .mapToObj(i -> (char)i)
+                .map(Coordinate::new);
+
+        currentX = 0;
+        currentY = 0;
+        Stream<Coordinate> robo = IntStream.range(0, inputCommands.length()-1)
+                .filter(i -> i % 2 != 0)
+                .map(inputCommands::charAt)
+                .mapToObj(i -> (char)i)
+                .map(Coordinate::new);
+
+        long countWithRobo = Stream.concat(Stream.of(new Coordinate(0, 0)), Stream.concat(santa, robo))
+                .distinct()
+                .count();
+        logger.info("Count distinct houses with robo: " + countWithRobo);
     }
 }
