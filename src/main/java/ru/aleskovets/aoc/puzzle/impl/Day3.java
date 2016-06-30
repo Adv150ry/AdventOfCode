@@ -104,8 +104,11 @@ public class Day3 extends PuzzleImpl {
         currentY = 0;
         String inputCommands = Files.lines(path)
                 .collect(Collectors.joining(""));
+        String test1 = "^v^v^v^v^v";
+        String test2 = "^>v<";
+        String test3 = "^v";
 
-        Stream<Coordinate> santa = IntStream.range(0, inputCommands.length()-1)
+        Stream<Coordinate> santa = IntStream.range(0, inputCommands.length())
                 .filter(i -> i % 2 == 0)
                 .map(inputCommands::charAt)
                 .mapToObj(i -> (char)i)
@@ -113,10 +116,11 @@ public class Day3 extends PuzzleImpl {
 
         currentX = 0;
         currentY = 0;
-        Stream<Coordinate> robo = IntStream.range(0, inputCommands.length()-1)
+        Stream<Coordinate> robo = IntStream.range(0, inputCommands.length())
                 .filter(i -> i % 2 != 0)
                 .map(inputCommands::charAt)
                 .mapToObj(i -> (char)i)
+                .map(Day3::invert)
                 .map(Coordinate::new);
 
         long countWithRobo = Stream.concat(Stream.of(new Coordinate(0, 0)), Stream.concat(santa, robo))
