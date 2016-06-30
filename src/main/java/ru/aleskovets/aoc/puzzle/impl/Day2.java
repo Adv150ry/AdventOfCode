@@ -2,8 +2,6 @@ package ru.aleskovets.aoc.puzzle.impl;
 
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.IntStream;
@@ -81,16 +79,14 @@ public class Day2 extends PuzzleImpl {
 
     @Override
     public void run(Path path) throws Exception {
-        int paper = new BufferedReader(new InputStreamReader(Files.newInputStream(path)))
-                .lines()
+        int paper = Files.lines(path)
                 .map(Box::new)
                 .map(Box::requiredSquare)
                 .reduce((sum, square)-> sum + square)
                 .orElse(0);
         logger.info("Paper required: " + paper);
 
-        int ribbon = new BufferedReader(new InputStreamReader(Files.newInputStream(path)))
-                .lines()
+        int ribbon = Files.lines(path)
                 .map(Box::new)
                 .map(Box::requiredPerimeter)
                 .reduce((sum, perimeter)-> sum + perimeter)
