@@ -37,7 +37,7 @@ public class AdventOfCodeApplication {
             Files.createDirectories(path.getParent());
             Files.copy(connection.getInputStream(), path);
         }
-        Class dayClass = Class.forName("ru.aleskovets.aoc.puzzle.impl.Day" + day);
+        Class dayClass = Class.forName("ru.aleskovets.aoc.puzzle.impl.day" + day + ".Day" + day);
         Puzzle puzzle = (Puzzle) app.getBean(dayClass);
 
         puzzle.run(path);

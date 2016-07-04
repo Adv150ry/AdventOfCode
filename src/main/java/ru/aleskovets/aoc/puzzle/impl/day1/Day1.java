@@ -1,7 +1,8 @@
-package ru.aleskovets.aoc.puzzle.impl;
+package ru.aleskovets.aoc.puzzle.impl.day1;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
+import ru.aleskovets.aoc.puzzle.impl.PuzzleImpl;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
