@@ -17,8 +17,6 @@ import java.nio.file.Paths;
 @SpringBootApplication
 public class AdventOfCodeApplication {
 
-	private static final String cookie = "session=53616c7465645f5f621f587e1179afd9f7bbc41242cb882358415d2e4c70845ab68818f67919cba1c63951b3a40c0964; _ga=GA1.2.271644391.1466421906";
-
     @Bean
     public Logger logger(){
         return LoggerFactory.getLogger("ApplicationOutput");
@@ -27,7 +25,8 @@ public class AdventOfCodeApplication {
 	public static void main(String[] args) throws Exception {
         ApplicationContext app = SpringApplication.run(AdventOfCodeApplication.class, args);
 
-		int day = Integer.parseInt(args[0]);
+        String cookie = args[0];
+		int day = Integer.parseInt(args[1]);
         Path path = Paths.get("src/main/resources/inputs/Day" + day);
         if (!Files.exists(path)) {
             URL url = new URL("http://adventofcode.com/day/" + day + "/input");
